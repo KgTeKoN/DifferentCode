@@ -8,6 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 function Component(id) {
@@ -45,6 +48,9 @@ function Prop(target, propertyKey) {
         set: setter
     });
 }
+function Param(target, propertyKey, index) {
+    console.log(propertyKey, index);
+}
 let User = class User {
     updateId(newId) {
         this.id = newId;
@@ -57,6 +63,7 @@ __decorate([
 ], User.prototype, "id", void 0);
 __decorate([
     Method,
+    __param(0, Param),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)

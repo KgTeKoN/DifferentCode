@@ -47,13 +47,21 @@ function Prop(
     })
 }
 
+function Param(
+    target: Object,
+    propertyKey: string,
+    index: number
+) {
+    console.log(propertyKey, index);
+}
+
 @Logger()
 @Component(1)
 export class User {
     @Prop id: number;
 
     @Method
-    updateId(newId: number) {
+    updateId(@Param newId: number) {
         this.id = newId;
         return this.id;
     }

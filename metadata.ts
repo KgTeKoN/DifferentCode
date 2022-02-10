@@ -11,7 +11,6 @@ function Injectable(key: string) {
 function Prop(target: Object, name: string) {
 }
 
-function Inject() {}
 
 @Injectable('C')
 export class C {
@@ -20,5 +19,5 @@ export class C {
 
 @Injectable('D')
 export class D {
-    constructor(@Inject('C') c: C) {}
+    constructor( c: C) {}
 }

@@ -9,32 +9,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.D = exports.C = void 0;
+exports.LoggerService = void 0;
+const inversify_1 = require("inversify");
+const tslog_1 = require("tslog");
 require("reflect-metadata");
-function Injectable(key) {
-    return (target) => {
-        Reflect.defineMetadata(key, 1, target);
-        const meta = Reflect.getMetadata(key, target);
-        console.log(meta);
-    };
-}
-function Prop(target, name) {
-}
-let C = class C {
+let LoggerService = class LoggerService {
+    constructor() {
+        this.logger = new tslog_1.Logger({
+            displayInstanceName: false,
+            displayLoggerName: false,
+            displayFilePath: "hidden",
+            displayFunctionName: false
+        });
+    }
+    log(...args) {
+        this.logger.info(...args);
+    }
+    error(...args) {
+        this.logger.error(...args);
+    }
+    warn(...args) {
+        this.logger.warn(...args);
+    }
 };
-__decorate([
-    Prop,
-    __metadata("design:type", Number)
-], C.prototype, "prop", void 0);
-C = __decorate([
-    Injectable('C')
-], C);
-exports.C = C;
-let D = class D {
-    constructor(c) { }
-};
-D = __decorate([
-    Injectable('D'),
-    __metadata("design:paramtypes", [C])
-], D);
-exports.D = D;
+LoggerService = __decorate([
+    (0, inversify_1.injectable)(),
+    __metadata("design:paramtypes", [])
+], LoggerService);
+exports.LoggerService = LoggerService;

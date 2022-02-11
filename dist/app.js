@@ -17,7 +17,7 @@ const express_1 = __importDefault(require("express"));
 class App {
     constructor(logger, userController, exceptionFilter) {
         this.app = (0, express_1.default)();
-        this.port = 8000;
+        this.port = 8001;
         this.logger = logger;
         this.userController = userController;
         this.exceptionFilter = exceptionFilter;
@@ -38,3 +38,4 @@ class App {
     }
 }
 exports.App = App;
+//# sourceMappingURL=app.js.map

@@ -7,8 +7,8 @@ class LoggerService {
         this.logger = new tslog_1.Logger({
             displayInstanceName: false,
             displayLoggerName: false,
-            displayFilePath: "hidden",
-            displayFunctionName: false
+            displayFilePath: 'hidden',
+            displayFunctionName: false,
         });
     }
     log(...args) {
@@ -22,3 +22,4 @@ class LoggerService {
     }
 }
 exports.LoggerService = LoggerService;
+//# sourceMappingURL=logger.service.js.map

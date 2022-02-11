@@ -45,7 +45,7 @@ function Prop(target, propertyKey) {
     };
     Object.defineProperty(target, propertyKey, {
         get: getter,
-        set: setter
+        set: setter,
     });
 }
 function Param(target, propertyKey, index) {
@@ -75,3 +75,4 @@ User = __decorate([
 exports.User = User;
 console.log(new User().id);
 console.log(new User().updateId(2));
+//# sourceMappingURL=decorator.js.map

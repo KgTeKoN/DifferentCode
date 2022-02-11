@@ -8,7 +8,7 @@ class UsersControllers extends base_controller_1.BaseController {
         super(logger);
         this.bindRoutes([
             { path: '/register', func: this.register, method: 'post' },
-            { path: '/login', func: this.login, method: 'post' }
+            { path: '/login', func: this.login, method: 'post' },
         ]);
     }
     login(req, res, next) {
@@ -19,3 +19,4 @@ class UsersControllers extends base_controller_1.BaseController {
     }
 }
 exports.UsersControllers = UsersControllers;
+//# sourceMappingURL=users.controllers.js.map

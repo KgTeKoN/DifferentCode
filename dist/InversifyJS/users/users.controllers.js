@@ -11,6 +11,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersControllers = void 0;
 const base_controller_1 = require("../common/base.controller");
@@ -18,25 +27,36 @@ const http_error_class_1 = require("../errors/http-error.class");
 const types_1 = require("../types");
 const inversify_1 = require("inversify");
 require("reflect-metadata");
+const user_service_1 = require("./user.service");
 let UsersControllers = class UsersControllers extends base_controller_1.BaseController {
-    constructor(loggerService) {
+    constructor(loggerService, userService) {
         super(loggerService);
         this.loggerService = loggerService;
+        this.userService = userService;
         this.bindRoutes([
             { path: '/register', func: this.register, method: 'post' },
-            { path: '/login', func: this.login, method: 'post' }
+            { path: '/login', func: this.login, method: 'post' },
         ]);
     }
     login(req, res, next) {
+        console.log(req.body);
         next(new http_error_class_1.HTTPError(401, 'Error of authorization', 'login'));
     }
-    register(req, res, next) {
-        this.ok(res, 'register');
+    register({ body }, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield this.userService.createUser(body);
+            if (!result) {
+                return next(new http_error_class_1.HTTPError(422, 'Гser already exists'));
+            }
+            this.ok(res, { email: result.email });
+        });
     }
 };
 UsersControllers = __decorate([
     (0, inversify_1.injectable)(),
     __param(0, (0, inversify_1.inject)(types_1.TYPES.ILogger)),
-    __metadata("design:paramtypes", [Object])
+    __param(1, (0, inversify_1.inject)(types_1.TYPES.UserService)),
+    __metadata("design:paramtypes", [Object, user_service_1.UserService])
 ], UsersControllers);
 exports.UsersControllers = UsersControllers;
+//# sourceMappingURL=users.controllers.js.map

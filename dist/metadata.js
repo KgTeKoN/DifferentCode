@@ -18,8 +18,7 @@ function Injectable(key) {
         console.log(meta);
     };
 }
-function Prop(target, name) {
-}
+function Prop(target, name) { }
 let C = class C {
 };
 __decorate([
@@ -38,3 +37,4 @@ D = __decorate([
     __metadata("design:paramtypes", [C])
 ], D);
 exports.D = D;
+//# sourceMappingURL=metadata.js.map

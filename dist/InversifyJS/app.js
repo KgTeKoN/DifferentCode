@@ -30,6 +30,7 @@ const users_controllers_1 = require("./users/users.controllers");
 const exception_filter_1 = require("./errors/exception.filter");
 const inversify_1 = require("inversify");
 const types_1 = require("./types");
+const body_parser_1 = require("body-parser");
 require("reflect-metadata");
 let App = class App {
     constructor(logger, userController, exceptionFilter) {
@@ -42,6 +43,9 @@ let App = class App {
         this.userController = userController;
         this.exceptionFilter = exceptionFilter;
     }
+    useMiddleware() {
+        this.app.use((0, body_parser_1.json)());
+    }
     useRoutes() {
         this.app.use('/users', this.userController.router);
     }
@@ -50,6 +54,7 @@ let App = class App {
     }
     init() {
         return __awaiter(this, void 0, void 0, function* () {
+            this.useMiddleware();
             this.useRoutes();
             this.useExceptionFilters();
             this.server = this.app.listen(this.port);
@@ -66,3 +71,4 @@ App = __decorate([
         exception_filter_1.ExceptionFilter])
 ], App);
 exports.App = App;
+//# sourceMappingURL=app.js.map

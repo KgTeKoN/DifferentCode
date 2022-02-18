@@ -1,3 +1,6 @@
-node_modules/
+/InversifyJS/node_modules
 /dist
-/.clinic
+/InversifyJS/.clinic
+/InversifyJS/.env
+/InversifyJS/prisma/dev.db
+/InversifyJS/prisma/dev.db-journal

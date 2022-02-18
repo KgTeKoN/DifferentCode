@@ -33,3 +33,5 @@ export class User {
 		return compare(pass, this._password);
 	}
 }
+
+//

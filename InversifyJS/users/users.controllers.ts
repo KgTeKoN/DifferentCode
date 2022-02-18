@@ -10,6 +10,7 @@ import { UserLoginDto } from './dto/user-login.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { UserService } from './user.service';
 import { ValidateMidleware } from '../common/validate.midleware';
+import { sign } from 'jsonwebtoken';
 
 @injectable()
 export class UsersControllers extends BaseController implements IUserController {
@@ -56,5 +57,26 @@ export class UsersControllers extends BaseController implements IUserController 
 			return next(new HTTPError(422, 'User already exists'));
 		}
 		this.ok(res, { email: result.email, id: result.id });
+	}
+
+	private signJWT(email: string, secret: string): Promise<string> {
+		return new Promise<string>((resolve, reject) => {
+			sign(
+				{
+					email,
+					iat: Math.floor(Date.now() / 1000),
+				},
+				secret,
+				{
+					algorithm: 'HS256',
+				},
+				(err, token) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(token as string);
+				},
+			)
+		})
 	}
 }

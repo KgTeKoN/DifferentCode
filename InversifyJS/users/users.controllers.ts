@@ -8,15 +8,17 @@ import 'reflect-metadata';
 import { IUserController } from './users.controllers.interface';
 import { UserLoginDto } from './dto/user-login.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
-import { UserService } from './user.service';
 import { ValidateMidleware } from '../common/validate.midleware';
 import { sign } from 'jsonwebtoken';
+import { IUserService } from './user.service.interface';
+import { IConfigService } from '../config/config.service.interface';
 
 @injectable()
 export class UsersControllers extends BaseController implements IUserController {
 	constructor(
 		@inject(TYPES.ILogger) private loggerService: ILogger,
-		@inject(TYPES.UserService) private userService: UserService,
+		@inject(TYPES.UserService) private userService: IUserService,
+		@inject(TYPES.ConfigService) private configService: IConfigService,
 	) {
 		super(loggerService);
 		this.bindRoutes([
@@ -44,7 +46,8 @@ export class UsersControllers extends BaseController implements IUserController 
 		if (!result) {
 			return next(new HTTPError(401, 'Error of authorization', 'login'));
 		}
-		this.ok(res, {});
+		const jwt = await this.signJWT(req.body.email, this.configService.get('SECRET'));
+		this.ok(res, { jwt });
 	}
 
 	async register(
@@ -76,7 +79,7 @@ export class UsersControllers extends BaseController implements IUserController 
 					}
 					resolve(token as string);
 				},
-			)
-		})
+			);
+		});
 	}
 }

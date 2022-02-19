@@ -1,10 +1,9 @@
 import { IMiddleware } from './middleware.interface';
-import { Request, Response,NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 
 export class AuthMiddleware implements IMiddleware {
-	constructor(private secret: string) {
-	}
+	constructor(private secret: string) {}
 
 	execute(req: Request, res: Response, next: NextFunction): void {
 		if (req.headers.authorization) {
@@ -15,7 +14,7 @@ export class AuthMiddleware implements IMiddleware {
 					req.user = payload.email;
 					next();
 				}
-			})
+			});
 		}
 		next();
 	}

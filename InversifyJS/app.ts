@@ -10,6 +10,7 @@ import 'reflect-metadata';
 import { IConfigService } from './config/config.service.interface';
 import { PrismaService } from './database/prisma.service';
 import { AuthMiddleware } from './common/auth.middleware';
+import { ExceptionFilter } from './errors/exception.filter';
 
 @injectable()
 export class App {

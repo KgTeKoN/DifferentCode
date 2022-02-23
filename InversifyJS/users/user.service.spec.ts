@@ -5,10 +5,9 @@ import { IUserService } from './user.service.interface';
 import { Container } from 'inversify';
 import { UserService } from './user.service';
 import { TYPES } from '../types';
-import { ConfigService } from '../config/config.service';
-import { UsersRepository } from './users.repository';
 import { UserModel } from '@prisma/client';
 import { User } from './user.entity';
+
 
 const ConfigServiceMock: IConfigService = {
 	get: jest.fn(),
@@ -26,8 +25,8 @@ let usersService: IUserService;
 
 beforeAll(() => {
 	container.bind<IUserService>(TYPES.UserService).to(UserService);
-	container.bind<IConfigService>(TYPES.ConfigService).to(ConfigService);
-	container.bind<IUsersRepository>(TYPES.UsersRepository).to(UsersRepository);
+	container.bind<IConfigService>(TYPES.ConfigService).toConstantValue(ConfigServiceMock);
+	container.bind<IUsersRepository>(TYPES.UsersRepository).toConstantValue(UsersRepositoryMock);
 
 	configService = container.get<IConfigService>(TYPES.ConfigService);
 	usersRepository = container.get<IUsersRepository>(TYPES.UsersRepository);

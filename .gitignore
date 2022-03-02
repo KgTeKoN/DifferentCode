@@ -4,3 +4,4 @@
 /InversifyJS/.env
 /InversifyJS/prisma/dev.db
 /InversifyJS/prisma/dev.db-journal
+/InversifyJS/coverage

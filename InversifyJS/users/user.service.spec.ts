@@ -8,7 +8,6 @@ import { TYPES } from '../types';
 import { UserModel } from '@prisma/client';
 import { User } from './user.entity';
 
-
 const ConfigServiceMock: IConfigService = {
 	get: jest.fn(),
 };
@@ -54,4 +53,13 @@ describe('User service', () => {
 		expect(createdUser?.id).toEqual(1);
 		expect(createdUser?.password).not.toEqual('1');
 	});
+
+	it('validateUser - success', async () => {
+		usersRepository.find = jest.fn().mockReturnValueOnce(createdUser);
+		const res = await usersService.validateUser({
+			email: 'a@a.ru',
+			password: '1',
+		});
+		expect(res).toBeTruthy();
+	})
 });
